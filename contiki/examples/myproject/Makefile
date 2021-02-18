@@ -1,16 +1,14 @@
 CONTIKI=../..
 
 
-all: my_project my_project_shell comnet
+all: helloworld comnet
 
-APPS+=myapps
-APPS+=serial-shell
+APPS+=myapp
 
 WITH_UIP=1
 UIP_CONF_IPV6=1
 
 CFLAGS+=-Os
-
 CFLAGS+=-DPROJECTCONFH=\"project-conf.h\"
 
 include $(CONTIKI)/Makefile.include
