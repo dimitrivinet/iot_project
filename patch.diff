@@ -1,0 +1,67 @@
+diff -crB contiki/core/dev/leds.c contiki_clean/core/dev/leds.c
+*** contiki/core/dev/leds.c	2012-07-17 12:19:11.000000000 +0200
+--- contiki_clean/core/dev/leds.c	2021-02-05 16:27:51.528796544 +0100
+***************
+*** 80,87 ****
+    inv = ~(leds ^ invert);
+    leds_invert(inv);
+  
+-   clock_delay(400);
+- 
+    leds_invert(inv);
+  }
+  /*---------------------------------------------------------------------------*/
+--- 80,85 ----
+diff -crB contiki/core/dev/serial-line.c contiki_clean/core/dev/serial-line.c
+*** contiki/core/dev/serial-line.c	2012-07-17 12:19:11.000000000 +0200
+--- contiki_clean/core/dev/serial-line.c	2021-02-18 14:43:36.893292669 +0100
+***************
+*** 46,53 ****
+--- 46,61 ----
+  #error Change SERIAL_LINE_CONF_BUFSIZE in contiki-conf.h.
+  #endif
+  
++ #if TARGET == minimal-net
+  #define IGNORE_CHAR(c) (c == 0x0d)
+  #define END 0x0a
++ #elif TARGET == native
++ #define IGNORE_CHAR(c) (c == 0x0d)
++ #define END 0x0a
++ #else
++ #define IGNORE_CHAR(c) (c == 0x0a)
++ #define END 0x0d
++ #endif
+  
+  static struct ringbuf rxbuf;
+  static uint8_t rxbuf_data[BUFSIZE];
+diff -crB contiki/platform/avr-atmega128rfa1/contiki-main.c contiki_clean/platform/avr-atmega128rfa1/contiki-main.c
+*** contiki/platform/avr-atmega128rfa1/contiki-main.c	2012-07-17 12:19:11.000000000 +0200
+--- contiki_clean/platform/avr-atmega128rfa1/contiki-main.c	2021-02-05 16:25:12.224799400 +0100
+***************
+*** 187,199 ****
+  #endif
+  
+    /* Second rs232 port for debugging or slip alternative */
+!   rs232_init(RS232_PORT_1, USART_BAUD_57600,USART_PARITY_NONE | USART_STOP_BITS_1 | USART_DATA_BITS_8);
+    /* Redirect stdout */
+- #if RF230BB_CONF_LEDONPORTE1 || defined(RAVEN_LCD_INTERFACE)
+    rs232_redirect_stdout(RS232_PORT_1);
+! #else
+!   rs232_redirect_stdout(RS232_PORT_0);
+! #endif
+    clock_init();
+  
+    if(MCUSR & (1<<PORF )) PRINTD("Power-on reset.\n");
+--- 187,198 ----
+  #endif
+  
+    /* Second rs232 port for debugging or slip alternative */
+!   rs232_init(RS232_PORT_1, USART_BAUD_19200,USART_PARITY_NONE | USART_STOP_BITS_1 | USART_DATA_BITS_8);
+!   rs232_set_input(RS232_PORT_1, serial_line_input_byte);
+    /* Redirect stdout */
+    rs232_redirect_stdout(RS232_PORT_1);
+!   
+!   
+    clock_init();
+  
+    if(MCUSR & (1<<PORF )) PRINTD("Power-on reset.\n");
