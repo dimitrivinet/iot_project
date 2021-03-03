@@ -39,7 +39,7 @@ sleep 1
 
 cd ~/
 cd $DIR/examples/myproject
-make comnet TARGET="native"
+make comnet TARGET="minimal-net"
 make clean
 
 echo "launching example."
