@@ -1,6 +1,6 @@
 # IoT_project: a microkernel programming project for 6LoWPAN
 
-A repository containing a patch for Contiki OS 2.7, fixing issues on certain microcontrollers, as well as a new app with an example to try it out.
+A repository containing a patch for Contiki OS 2.6, fixing issues on certain microcontrollers, as well as a new app with an example to try it out.
 
 ### Patch:
 
