@@ -17,7 +17,7 @@ The application adds serial shell commands for sending messages to other microco
 
 cd ~
 git clone https://github.com/dimitrivinet/iot_project.git
-sh install.sh <name_of_dir_to_be_patched>
+sh iot_project/install.sh <name_of_dir_to_be_patched>
 
 ```
 
