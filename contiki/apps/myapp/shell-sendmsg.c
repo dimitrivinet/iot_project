@@ -104,7 +104,7 @@ PROCESS_THREAD(shell_sendmsg_process, ev, data)
   {
     //shell_output_str(&sendmsg_command,
     //	"send MSG: need username first (use setname USER_NAME)", "");
-    printf("send MSG: need username first (use netmane USER_NAME)"); 
+    printf("send MSG: need username first (use netmane USER_NAME)\n"); 
   }
   else
   {
