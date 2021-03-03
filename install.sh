@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 if test -z "$1"; then
 	DIR=~/contiki
 else
@@ -19,7 +21,7 @@ echo "starting patch..."
 echo ""
 sleep 1
 
-cd ~/contiki
+cd $DIR
 patch -p1 < ~/iot_project/patch.diff
 
 echo ""
@@ -27,15 +29,17 @@ echo "contiki directory patched. Copying new app and example into contiki direct
 echo ""
 sleep 1
 
-cp -r ~/iot_project/contiki ~/
+cp -r ~/iot_project/contiki/apps/myapp apps
+cp -r ~/iot_project/contiki/examples/myproject examples
 
 echo "app and example copied."
 echo "patch done!"
 echo "compiling example..."
 sleep 1
 
-cd ~/contiki/examples/myproject
-make comnet TARGET="minimal-net"
+cd ~/
+cd $DIR/examples/myproject
+make comnet TARGET="native"
 make clean
 
 echo "launching example."
